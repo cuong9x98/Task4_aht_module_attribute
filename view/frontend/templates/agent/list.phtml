@@ -1,0 +1,49 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \AHT\Attribute\Block\Customer\Agent $block */
+?>
+
+<?php
+    $myAgent =  $block->getCommision();
+    $total_price = 0;
+?>
+<div class="table-wrapper orders-recent">
+    <table class="data table table-order-items recent" id="my-orders-table">
+        <caption class="table-caption">Sales Agent</caption>
+        <thead>
+        <tr>
+            <th scope="col" class="col order_item_sku">Name Product</th>
+            <th scope="col" class="col order_item_price"> Price</th>
+            <th scope="col" class="col commision_type">Commision Type</th>
+            <th scope="col" class="col commision_value">Commision Value</th>
+        </tr>
+        <tbody>
+            <?php foreach ($myAgent as $item): ?>
+                <tr>
+                    <td data-th="Order Item Sku" class="col order_item_sku">
+
+                        <a href="<?= $item['product_url'] ?>">
+                            <div class="product-sku-block">
+                                <span>SKU:</span><?= $item['name'] ?>
+                            </div>
+                        </a>
+                    </td>
+                    <td data-th="Order Item Price" class="col order_item_price"><span class="price">$<?= $item['price'] ?></span></td>
+                    <td data-th="Commision Type" class="col commision_type"><?php 
+                        if ($item['commission_type']==0)
+                        {
+                            echo "Percent";
+                        }else{
+                            echo "Fixed";
+                            }  ?></td>
+                    <td data-th="Commision Value" class="col commision_value"><?= $item['commission_value'] ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+

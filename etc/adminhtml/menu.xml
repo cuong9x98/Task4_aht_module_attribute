@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="AHT_Attribute::agent" title="Agent" translate="title" module="AHT_Attribute"
+             sortOrder="55"  resource="AHT_Attribute::agent" />
+
+        <add id="AHT_Attribute::report" title="Agent Report" translate="title" module="AHT_Attribute"
+             sortOrder="10" parent="AHT_Attribute::agent" action="agent/report/index"
+             resource="AHT_Attribute::report"/>
+    </menu>
+</config>

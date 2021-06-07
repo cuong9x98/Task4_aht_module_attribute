@@ -2,7 +2,7 @@
 
 namespace AHT\Attribute\Model\Source;
 
-class Type extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
+class TypeProduct extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
 {
     /**
      * Get all options
@@ -12,8 +12,8 @@ class Type extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
     public function getAllOptions()
     {
         $this->_options = [
-            ['label' => __('Yes'), 'value' => 1],
-            ['label' => __('No'), 'value' => 0]
+            ['label' => __('fixed'), 'value' => '1'],
+            ['label' => __('percent'), 'value' => '0']
         ];
         return $this->_options;
 

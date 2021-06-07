@@ -1,0 +1,99 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+/** @var \AHT\SalesAgent\Block\Adminhtml\Report\AgentPhtml $block */
+?>
+<?php
+$data = $block->getSalesAgent();
+?>
+
+<fieldset class="fieldset admin__fieldset " id="slaes_agent_report">
+    <span class="field-row">
+        <label for="slaes_agent_report" class="admin__control-support-text">
+            <span>SKU:</span>
+        </label>
+        <input class="input-text no-changes required-entry admin__control-text" type="text" id="order_item_sku" name="order_item_sku" value="" >
+    </span>
+    <span class="field-row">
+        <input id="refresh_filter" title="Export" type="button" class="action-default scalable task" value="Export">
+    </span>
+</fieldset>
+
+<hr>
+<div class="admin__table-wrapper">
+    <table id="agent_report_table" class="data-table admin__table-primary edit-order-table">
+        <thead>
+        <tr class="headings">
+            <th class="col-real_order_id"><span>Order ID</span></th>
+            <th class="col-customer_name"><span>Agent ID</span></th>
+            <th class="col-product_sku"><span>Order Item Sku</span></th>
+            <th class="col-price"><span>Order Item Price</span></th>
+            <th class="col-commision_type"><span>Commision Type</span></th>
+            <th class="col-commision_value"><span>Commision Value</span></th>
+            <th class="col-total"><span>Total </span></th>
+        </tr>
+        </thead>
+        <?php if(isset($data)){ foreach ($data as $item) : ?>
+
+        <?php endforeach; }?>
+    </table>
+</div>
+
+
+<script type="text/javascript">
+    require(['jquery'], function($){
+        $(document).ready(function(){
+            $("#refresh_filter").click(function() {
+                $('.even.agent_body').remove();
+                var url = "<?= $block->getUrl('agent/ajax/index/'); ?>";
+                console.log(url);
+                $.ajax({
+                    showLoader: true,
+                    url: url,
+                    data: {
+                        order_item_sku: $('#order_item_sku').val()
+                    },
+                    type: "POST",
+                    dataType: 'json'
+                }).done(function (response){
+                    $.each( response, function( i, val ) {
+                        console.log(val.order_url);
+                            $("#agent_report_table").append("<tbody class=\"even agent_body agent_"+i+"\">\n" +
+                                "        <tr>\n" +
+                                "            <td class=\"col-real_order_id\"><a href=\""+val.order_url+"\">"+val.order_id+"</a></td>\n" +
+                                "            <td class=\"customer_name\">"+val.agent_id+"</td>\n" +
+                                "            <td class=\"col-product_sku\">\n" +
+                                "                <div id=\"product_sku\">\n" +
+                                "                    <div class=\"product-sku-block\">\n" +
+                                "                        <span>SKU:</span>\n" +
+                                "                        "+val.order_item_sku+"</div>\n" +
+                                "                </div>\n" +
+                                "            </td>\n" +
+                                "            <td class=\"col-price\">\n" +
+                                "                <div class=\"price-excl-tax\">\n" +
+                                "                    <span class=\"price\">$"+val.order_item_price+"</span>\n" +
+                                "                </div>\n" +
+                                "            </td>\n" +
+                                "            <td class=\"col-commision_type\">\n" +
+                                "                "+val.commision_type+"\n" +
+                                "            </td>\n" +
+                                "            <td class=\"col-commision_value\">\n" +
+                                "                "+val.commision_value+"\n" +
+                                "            </td>\n" +
+                                "            <td class=\"col-total\">\n" +
+                                "                <span class=\"total\">"+val.total+"</span>\n" +
+                                "            </td>\n" +
+                                "        </tr>\n" +
+                                "        </tbody>");
+                    });
+                }).fail(function (error) {
+                    console.log('error ajax');
+                })
+            });
+        });
+    });
+</script>
