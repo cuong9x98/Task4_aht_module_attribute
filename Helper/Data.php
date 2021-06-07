@@ -5,7 +5,7 @@ namespace AHT\Attribute\Helper;
 use \Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 
-class DataAgent extends AbstractHelper
+class Data extends AbstractHelper
 {
     protected $agentFactory;
     protected $customerRepositoryInterface;

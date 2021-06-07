@@ -43,7 +43,6 @@ class Index extends \Magento\Backend\App\Action {
     public function filterAgent($orderItemSku){
         $data = [];
         $salesAgent = $this->helperData->getSalesAgent();
-        
         foreach ($salesAgent as $item) {
             if ($item['order_item_sku'] == $orderItemSku) {
                 $order = $this->orderFactory->create()->loadByIncrementId($item['order_id']);
@@ -52,7 +51,6 @@ class Index extends \Magento\Backend\App\Action {
                 $data[] = $item;
             }
         }
-
         return $data;
     }
 }
